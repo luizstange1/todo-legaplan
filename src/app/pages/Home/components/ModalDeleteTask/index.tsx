@@ -1,12 +1,13 @@
-import { useTasks } from "@/app/hooks/useTasks";
 import "./styles.scss";
 
 interface modalDeleteTask {
   handleCloseModalDeleteTask: (arg0: boolean) => void;
+  handleDeleteTask: () => void;
 }
 
 export function ModalDeleteTask({
   handleCloseModalDeleteTask,
+  handleDeleteTask,
 }: modalDeleteTask) {
   return (
     <div className="modalOverlay">
@@ -21,7 +22,9 @@ export function ModalDeleteTask({
           >
             Cancelar
           </button>
-          <button className="deleteTaskButton">Deletar</button>
+          <button className="deleteTaskButton" onClick={handleDeleteTask}>
+            Deletar
+          </button>
         </div>
       </div>
     </div>

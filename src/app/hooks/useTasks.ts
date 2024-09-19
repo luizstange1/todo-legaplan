@@ -29,14 +29,5 @@ export function useTasks() {
     }
   }, [tasks, isClient]);
 
-  function handleUpdateTaskList() {
-    if (isClient) {
-      const savedTasks = localStorage.getItem("tasks");
-      if (savedTasks) {
-        setTasks(JSON.parse(savedTasks));
-      }
-    }
-  }
-
-  return { tasks, setTasks, handleUpdateTaskList };
+  return { tasks, setTasks };
 }

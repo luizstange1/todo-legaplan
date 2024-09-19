@@ -2,14 +2,17 @@
 
 import { TrashSimple } from "@phosphor-icons/react/dist/ssr";
 import "./styles.scss";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ModalAddNewTask, ModalDeleteTask } from "./components";
 import { useTasks } from "@/app/hooks/useTasks";
 
 export function Tasks() {
   const [openModalNewTask, setOpenModalNewTask] = useState(false);
   const [openModalDeleteTask, setOpenModalDeleteTask] = useState(false);
-  const { tasks } = useTasks();
+  const [idOfTheTaskToBeDeleted, setIdOfTheTaskToBeDeleted] = useState<
+    string | null
+  >(null);
+  const { tasks, setTasks } = useTasks();
 
   function handleOpenModalNewTask() {
     setOpenModalNewTask(true);
@@ -19,11 +22,28 @@ export function Tasks() {
     setOpenModalNewTask(false);
   }
 
-  function handleOpenModalDeleteTask() {
+  function handleOpenModalDeleteTask(id: string) {
     setOpenModalDeleteTask(true);
+    setIdOfTheTaskToBeDeleted(id);
   }
 
   function handleCloseModalDeleteTask() {
+    setOpenModalDeleteTask(false);
+    setIdOfTheTaskToBeDeleted(null);
+  }
+
+  function handleDeleteTask() {
+    if (idOfTheTaskToBeDeleted) {
+      const newTaskList = tasks.filter((task) => {
+        return task.id !== idOfTheTaskToBeDeleted;
+      });
+
+      setTasks(newTaskList);
+
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+
+    setIdOfTheTaskToBeDeleted(null);
     setOpenModalDeleteTask(false);
   }
 
@@ -36,6 +56,7 @@ export function Tasks() {
       {openModalDeleteTask && (
         <ModalDeleteTask
           handleCloseModalDeleteTask={handleCloseModalDeleteTask}
+          handleDeleteTask={handleDeleteTask}
         />
       )}
 
@@ -55,7 +76,7 @@ export function Tasks() {
                     <TrashSimple
                       size={20}
                       className="trashIcon"
-                      onClick={handleOpenModalDeleteTask}
+                      onClick={() => handleOpenModalDeleteTask(task.id)}
                     />
                   </ul>
                 )
@@ -76,7 +97,7 @@ export function Tasks() {
                     <TrashSimple
                       size={20}
                       className="trashIcon"
-                      onClick={handleOpenModalDeleteTask}
+                      onClick={() => handleOpenModalDeleteTask(task.id)}
                     />
                   </div>
                 )
