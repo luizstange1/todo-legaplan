@@ -1,6 +1,5 @@
 "use client";
-
-import { TrashSimple } from "@phosphor-icons/react/dist/ssr";
+import { TrashSimple, List, SmileySad } from "@phosphor-icons/react/dist/ssr";
 import "./styles.scss";
 import { useState } from "react";
 import { ModalAddNewTask, ModalDeleteTask } from "./components";
@@ -13,6 +12,12 @@ export function Tasks() {
     string | null
   >(null);
   const { tasks, setTasks } = useTasks();
+  const tasksInProgress = tasks.filter((task) => {
+    return task.status === "IN_PROGRESS";
+  });
+  const tasksCompleted = tasks.filter((task) => {
+    return task.status === "FINISHED";
+  });
 
   function handleOpenModalNewTask() {
     setOpenModalNewTask(true);
@@ -47,6 +52,18 @@ export function Tasks() {
     setOpenModalDeleteTask(false);
   }
 
+  function handleCompleteTask(id: string) {
+    const updatedTask = tasks.map((task) => {
+      if (task.id === id) {
+        return { ...task, status: "FINISHED" };
+      }
+      return task;
+    });
+
+    setTasks(updatedTask);
+    localStorage.setItem("tasks", JSON.stringify(updatedTask));
+  }
+
   return (
     <>
       {openModalNewTask && (
@@ -65,42 +82,65 @@ export function Tasks() {
           <h2 className="subtitle">Suas tarefas de hoje</h2>
 
           <div className="todoList">
-            {tasks.map(
-              (task) =>
-                task.status === "IN_PROGRESS" && (
-                  <ul className="tasks" key={task.id}>
-                    <li className="task">
-                      <input type="checkbox" className="checkbox" />
-                      <span className="taskTitle">{task.description}</span>
-                    </li>
-                    <TrashSimple
-                      size={20}
-                      className="trashIcon"
-                      onClick={() => handleOpenModalDeleteTask(task.id)}
+            {tasksInProgress.length === 0 ? (
+              <strong>
+                <span className="noTaskText">
+                  <List size={24} />
+                  Você ainda não tem tarefas criadas
+                </span>
+              </strong>
+            ) : (
+              tasksInProgress.map((task) => (
+                <ul className="tasks" key={task.id}>
+                  <li className="task">
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      onClick={() => handleCompleteTask(task.id)}
                     />
-                  </ul>
-                )
+                    <span className="taskTitle">{task.description}</span>
+                  </li>
+                  <TrashSimple
+                    size={20}
+                    className="trashIcon"
+                    onClick={() => handleOpenModalDeleteTask(task.id)}
+                  />
+                </ul>
+              ))
             )}
           </div>
 
           <h2 className="subtitle">Tarefas finalizadas</h2>
 
           <div className="todoList">
-            {tasks.map(
-              (task) =>
-                task.status === "FINISHED" && (
-                  <div className="tasks" key={task.id}>
-                    <div className="task">
-                      <input type="checkbox" className="checkbox" />
-                      <span className="taskTitle">{task.description}</span>
-                    </div>
-                    <TrashSimple
-                      size={20}
-                      className="trashIcon"
-                      onClick={() => handleOpenModalDeleteTask(task.id)}
+            {tasksCompleted.length === 0 ? (
+              <strong>
+                <span className="noTaskText">
+                  <SmileySad size={24} />
+                  Você ainda não tem tarefas concluídas
+                </span>
+              </strong>
+            ) : (
+              tasksCompleted.map((task) => (
+                <ul className="tasks" key={task.id}>
+                  <li className="task">
+                    <input
+                      type="checkbox"
+                      className="checkbox"
+                      checked
+                      disabled
                     />
-                  </div>
-                )
+                    <span className="titleOfCompletedTask">
+                      {task.description}
+                    </span>
+                  </li>
+                  <TrashSimple
+                    size={20}
+                    className="trashIcon"
+                    onClick={() => handleOpenModalDeleteTask(task.id)}
+                  />
+                </ul>
+              ))
             )}
           </div>
         </div>

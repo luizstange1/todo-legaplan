@@ -36,6 +36,15 @@
   row-gap: 1.5rem;
 }
 
+.noTaskText {
+  font-size: 0.75rem;
+  opacity: 54%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 0.25rem;
+}
+
 .tasks {
   display: flex;
   justify-content: space-between;
@@ -51,7 +60,8 @@
     border-style: solid;
 
     .trashIcon,
-    .taskTitle {
+    .taskTitle,
+    .titleOfCompletedTask {
       background-color: $hover;
     }
   }
@@ -88,4 +98,8 @@
   color: $white;
   border: none;
   cursor: pointer;
+}
+
+.titleOfCompletedTask {
+  text-decoration: line-through;
 }
