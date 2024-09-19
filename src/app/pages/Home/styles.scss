@@ -29,7 +29,7 @@
   opacity: 54%;
 }
 
-.todo__list {
+.todoList {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -50,8 +50,8 @@
     background-color: $hover;
     border-style: solid;
 
-    .trash__icon,
-    .task__title {
+    .trashIcon,
+    .taskTitle {
       background-color: $hover;
     }
   }
@@ -66,18 +66,18 @@
   cursor: pointer;
 }
 
-.task__title {
+.taskTitle {
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.2;
 }
 
-.trash__icon {
+.trashIcon {
   color: #b0bbd1;
   cursor: pointer;
 }
 
-.addTask__button {
+.addTaskButton {
   width: 28.125rem;
   height: 3.188rem;
   background: $blue-gradient;
