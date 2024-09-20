@@ -24,6 +24,11 @@
   width: 28.125rem;
   z-index: 1001;
   box-shadow: 0px 24px 48px -12px #1018282e;
+
+  @media (max-width: 500px) {
+    width: 100vw;
+    height: 100vh;
+  }
 }
 
 .newTaskModalTitle {
@@ -54,6 +59,19 @@
   gap: 1rem;
   justify-content: center;
   margin-top: 2rem;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    padding-top: 2rem;
+
+    button:first-child {
+      order: 2;
+    }
+
+    button:last-child {
+      order: 1;
+    }
+  }
 }
 
 .closeModalNewTaskButton,

@@ -30,6 +30,11 @@
     line-height: 1.5rem;
     opacity: 54%;
   }
+
+  @media (max-width: 500px) {
+    width: 100vw;
+    height: 100vh;
+  }
 }
 
 .deleteTaskModalTitle {
@@ -42,6 +47,19 @@
   display: flex;
   gap: 1rem;
   justify-content: center;
+
+  @media (max-width: 500px) {
+    flex-direction: column;
+    margin: 0;
+
+    button:first-child {
+      order: 2;
+    }
+
+    button:last-child {
+      order: 1;
+    }
+  }
 }
 
 .closeModalDeleteTaskButton,
