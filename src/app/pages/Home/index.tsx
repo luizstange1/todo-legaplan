@@ -124,12 +124,7 @@ export function Tasks() {
               tasksCompleted.map((task) => (
                 <ul className="tasks" key={task.id}>
                   <li className="task">
-                    <input
-                      type="checkbox"
-                      className="checkbox"
-                      checked
-                      disabled
-                    />
+                    <input type="checkbox" className="checkbox" checked />
                     <span className="titleOfCompletedTask">
                       {task.description}
                     </span>

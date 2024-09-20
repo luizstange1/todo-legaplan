@@ -73,7 +73,36 @@
 }
 
 .checkbox {
+  appearance: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #0796d3;
+  border-radius: 4px;
   cursor: pointer;
+  position: relative;
+
+  &:checked {
+    background-color: #a0dcf6;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      width: 4px;
+      height: 8px;
+      border: solid #0796d3;
+      border-width: 0 2px 2px 0;
+      transform: translate(-50%, -50%) rotate(45deg);
+    }
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .taskTitle {
@@ -102,4 +131,7 @@
 
 .titleOfCompletedTask {
   text-decoration: line-through;
+  opacity: 54%;
+  line-height: 1.2;
+  font-weight: 400;
 }
